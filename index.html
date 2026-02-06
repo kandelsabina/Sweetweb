@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Valentine’s Day 💕</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle, #ffe4ec, #ffd1dc);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Comic Sans MS', cursive;
+    overflow: hidden;
+}
+
+/* Main Flower */
+.flower {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.flower:hover {
+    transform: scale(1.05);
+}
+
+.petal {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #ffb3c6, #ff8fab);
+    border-radius: 50%;
+    transform: scale(0) rotate(0deg);
+    transition: transform 1.2s ease;
+    box-shadow: 0 0 15px rgba(255,105,135,0.4);
+}
+
+.petal:nth-child(1) { top: 0; left: 60px; }
+.petal:nth-child(2) { top: 60px; left: 0; }
+.petal:nth-child(3) { top: 60px; left: 120px; }
+.petal:nth-child(4) { top: 120px; left: 60px; }
+
+.center {
+    position: absolute;
+    top: 70px;
+    left: 70px;
+    width: 60px;
+    height: 60px;
+    background: #ff4d6d;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 1.2s ease;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%,100% { box-shadow: 0 0 10px rgba(255,77,109,0.5); }
+    50% { box-shadow: 0 0 25px rgba(255,77,109,0.9); }
+}
+
+.bloom .petal {
+    transform: scale(1) rotate(45deg);
+}
+
+.bloom .center {
+    transform: scale(1);
+}
+
+/* Message */
+.message {
+    margin-top: 25px;
+    font-size: 34px;
+    color: #d6336c;
+    min-height: 40px;
+    z-index: 2;
+}
+
+/* Love Letter */
+.letter {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+    background: linear-gradient(135deg, #fff, #fff0f5);
+    width: 320px;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: all 0.6s ease;
+    z-index: 5;
+    text-align: center;
+}
+
+.letter.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.letter h2 {
+    color: #ff4d6d;
+    margin-bottom: 10px;
+}
+
+.letter p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* Sparkles */
+.sparkle {
+    position: absolute;
+    font-size: 14px;
+    animation: sparkle 1s ease-out forwards;
+}
+
+@keyframes sparkle {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Background flowers */
+.bg-flower {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0.25;
+    animation: drift 10s ease-in-out infinite;
+}
+
+@keyframes drift {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="flower" id="flower">
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="center"></div>
+</div>
+
+<div class="message" id="text"></div>
+
+<div class="letter" id="letter">
+    <h2>💌 My Love</h2>
+    <p>
+        From the moment you entered my life, everything became softer, warmer, and brighter.
+        Your smile feels like home, your voice feels like comfort, and your presence feels like love.
+        <br><br>
+        On this Valentine’s Day, I just want you to know how deeply you are cherished.
+        Every little thing about you makes my world bloom.
+        <br><br>
+        Forever yours 💕
+    </p>
+</div>
+
+<script>
+/* Typing text */
+const text = "Happy Valentine’s Day 💕";
+let index = 0;
+const textElement = document.getElementById("text");
+
+function typeText() {
+    if (index < text.length) {
+        textElement.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeText, 100);
+    }
+}
+typeText();
+
+/* Flower click */
+const flower = document.getElementById("flower");
+const letter = document.getElementById("letter");
+
+flower.addEventListener("click", (e) => {
+    flower.classList.toggle("bloom");
+    letter.classList.add("show");
+    sparkle(e.clientX, e.clientY);
+});
+
+/* Sparkle effect */
+function sparkle(x, y) {
+    for (let i = 0; i < 6; i++) {
+        const s = document.createElement("div");
+        s.className = "sparkle";
+        s.innerHTML = "✨";
+        s.style.left = x + Math.random()*40 - 20 + "px";
+        s.style.top = y + Math.random()*40 - 20 + "px";
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 1000);
+    }
+}
+
+/* Floating hearts */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.bottom = "0";
+    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 500);
+
+/* Background flowers */
+const flowers = ["🌸","🌷","🌼","💐"];
+for (let i = 0; i < 30; i++) {
+    const f = document.createElement("div");
+    f.className = "bg-flower";
+    f.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+    f.style.left = Math.random() * 100 + "vw";
+    f.style.top = Math.random() * 100 + "vh";
+    f.style.animationDuration = (6 + Math.random() * 6) + "s";
+    document.body.appendChild(f);
+}
+</script>
+
+</body>
+</html>
