@@ -755,6 +755,14 @@ body {
     border-bottom: 2px solid #ffb3c6;
 }
 
+.music-loading {
+    text-align: center;
+    font-size: 16px;
+    color: #999;
+    padding: 20px;
+    font-style: italic;
+}
+
 .music-item-wrapper {
     background: linear-gradient(135deg, #fff5f7 0%, #f9f9f9 100%);
     padding: 20px;
@@ -1549,58 +1557,91 @@ function updateCountdownTimer(targetDate) {
 // Display music playlist with HTML5 audio player
 function displayMusicPlaylist(musicList) {
     const playlistContainer = document.getElementById('musicPlaylist');
-    playlistContainer.innerHTML = '<div class="music-title">🎶 Romantic Playlist for This Day 🎶</div>';
+    playlistContainer.innerHTML = '<div class="music-title">🎶 Romantic Playlist for This Day 🎶</div><div class="music-loading">Loading real songs...</div>';
+    
+    let loadedCount = 0;
     
     musicList.forEach((song, index) => {
-        const musicItem = document.createElement('div');
-        musicItem.className = 'music-item-wrapper';
-        
-        // Get music URL from free sources
-        const musicUrl = getMusicUrl(song.name, song.artist);
-        
-        musicItem.innerHTML = `
-            <div class="music-header">
-                <div class="music-play-btn">♫</div>
-                <div class="music-info">
-                    <div class="music-name">${song.name}</div>
-                    <div class="music-artist">${song.artist}</div>
+        // Fetch real song preview URL from iTunes API
+        fetchRealSong(song.name, song.artist).then(musicUrl => {
+            loadedCount++;
+            
+            if (!musicUrl) {
+                console.log(`Could not find preview for ${song.name} by ${song.artist}`);
+                return;
+            }
+            
+            const musicItem = document.createElement('div');
+            musicItem.className = 'music-item-wrapper';
+            
+            musicItem.innerHTML = `
+                <div class="music-header">
+                    <div class="music-play-btn">♫</div>
+                    <div class="music-info">
+                        <div class="music-name">${song.name}</div>
+                        <div class="music-artist">${song.artist}</div>
+                    </div>
                 </div>
-            </div>
-            <div class="music-player-container">
-                <audio controls style="width: 100%; margin-top: 10px;">
-                    <source src="${musicUrl}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
-        `;
-        
-        playlistContainer.appendChild(musicItem);
+                <div class="music-player-container">
+                    <audio controls style="width: 100%; margin-top: 10px;" controlsList="nodownload">
+                        <source src="${musicUrl}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            `;
+            
+            // Remove loading message if this is first song
+            if (loadedCount === 1) {
+                const loadingEl = playlistContainer.querySelector('.music-loading');
+                if (loadingEl) loadingEl.remove();
+            }
+            
+            playlistContainer.appendChild(musicItem);
+        }).catch(error => {
+            console.error(`Error loading song ${song.name}:`, error);
+        });
     });
 }
 
-// Get music URL from free streaming sources
-function getMusicUrl(songName, artistName) {
-    // Using free royalty-free romantic music from various sources
-    // These are real working URLs from free music services
-    
-    // List of romantic songs with working audio URLs
-    const musicDatabase = {
-        'Perfect-Ed Sheeran': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-        'All of Me-John Legend': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-        'Thinking Out Loud-Ed Sheeran': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-        'Shape of You-Ed Sheeran': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
-        'Love Me Like You Do-Ellie Goulding': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
-        'One More Night-Maroon 5': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
-        'Lighters-Bad Meets Evil': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
-        'Someone Like You-Adele': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
-    };
-    
-    const key = songName + '-' + artistName;
-    const url = musicDatabase[key];
-    
-    // If song not found in database, return default test audio
-    // This is a 10-second test tone that works reliably
-    return url || 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+// Fetch real song preview from iTunes API
+function fetchRealSong(songName, artistName) {
+    return new Promise((resolve, reject) => {
+        const searchQuery = `${encodeURIComponent(songName)} ${encodeURIComponent(artistName)}`;
+        const itunesUrl = `https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=1`;
+        
+        fetch(itunesUrl, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.results && data.results.length > 0 && data.results[0].previewUrl) {
+                resolve(data.results[0].previewUrl);
+            } else {
+                // If iTunes doesn't have it, try with just the song name
+                const fallbackUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(songName)}&media=music&limit=5`;
+                return fetch(fallbackUrl);
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.results && data.results.length > 0) {
+                // Find first result with preview URL
+                for (let result of data.results) {
+                    if (result.previewUrl) {
+                        resolve(result.previewUrl);
+                        return;
+                    }
+                }
+            }
+            resolve(null);
+        })
+        .catch(error => {
+            console.error('Error fetching from iTunes API:', error);
+            resolve(null);
+        });
+    });
 }
 
 // Back to week plan
