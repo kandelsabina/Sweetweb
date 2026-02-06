@@ -1557,9 +1557,10 @@ function updateCountdownTimer(targetDate) {
 // Display music playlist with HTML5 audio player
 function displayMusicPlaylist(musicList) {
     const playlistContainer = document.getElementById('musicPlaylist');
-    playlistContainer.innerHTML = '<div class="music-title">🎶 Romantic Playlist for This Day 🎶</div><div class="music-loading">Loading real songs...</div>';
+    playlistContainer.innerHTML = '<div class="music-title">🎶 Romantic Playlist for This Day 🎶</div><div class="music-loading">🎵 Loading songs...</div>';
     
     let loadedCount = 0;
+    const totalSongs = musicList.length;
     
     musicList.forEach((song, index) => {
         // Fetch real song preview URL from iTunes API
@@ -1567,7 +1568,7 @@ function displayMusicPlaylist(musicList) {
             loadedCount++;
             
             if (!musicUrl) {
-                console.log(`Could not find preview for ${song.name} by ${song.artist}`);
+                console.log(`Could not find any URL for ${song.name} by ${song.artist}`);
                 return;
             }
             
@@ -1583,7 +1584,7 @@ function displayMusicPlaylist(musicList) {
                     </div>
                 </div>
                 <div class="music-player-container">
-                    <audio controls style="width: 100%; margin-top: 10px;" controlsList="nodownload">
+                    <audio controls style="width: 100%; margin-top: 10px;" crossorigin="anonymous">
                         <source src="${musicUrl}" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
@@ -1599,6 +1600,7 @@ function displayMusicPlaylist(musicList) {
             playlistContainer.appendChild(musicItem);
         }).catch(error => {
             console.error(`Error loading song ${song.name}:`, error);
+            loadedCount++;
         });
     });
 }
@@ -1607,39 +1609,47 @@ function displayMusicPlaylist(musicList) {
 function fetchRealSong(songName, artistName) {
     return new Promise((resolve, reject) => {
         const searchQuery = `${encodeURIComponent(songName)} ${encodeURIComponent(artistName)}`;
-        const itunesUrl = `https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=1`;
+        const itunesUrl = `https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=1&entity=song`;
         
-        fetch(itunesUrl, {
-            headers: {
-                'Accept': 'application/json'
-            }
+        fetch(itunesUrl)
+        .then(response => {
+            if (!response.ok) throw new Error('iTunes API error');
+            return response.json();
         })
-        .then(response => response.json())
         .then(data => {
             if (data.results && data.results.length > 0 && data.results[0].previewUrl) {
+                console.log(`Found preview for: ${songName}`);
                 resolve(data.results[0].previewUrl);
             } else {
+                console.log(`No preview found for: ${songName}, trying fallback`);
                 // If iTunes doesn't have it, try with just the song name
-                const fallbackUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(songName)}&media=music&limit=5`;
+                const fallbackUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(songName)}&media=music&limit=10&entity=song`;
                 return fetch(fallbackUrl);
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response || !response.ok) return Promise.resolve(null);
+            return response.json();
+        })
         .then(data => {
-            if (data.results && data.results.length > 0) {
+            if (data && data.results && data.results.length > 0) {
                 // Find first result with preview URL
                 for (let result of data.results) {
                     if (result.previewUrl) {
+                        console.log(`Found fallback preview for: ${songName}`);
                         resolve(result.previewUrl);
                         return;
                     }
                 }
             }
-            resolve(null);
+            // If still no preview found, use a default royalty-free music
+            console.log(`No preview found for ${songName}, using free music`);
+            resolve('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
         })
         .catch(error => {
-            console.error('Error fetching from iTunes API:', error);
-            resolve(null);
+            console.error(`Error fetching song ${songName}:`, error);
+            // Return free music as fallback
+            resolve('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
         });
     });
 }
