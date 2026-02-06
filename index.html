@@ -706,6 +706,63 @@ body {
     margin-bottom: 15px;
 }
 
+/* Places Section */
+.expanded-places {
+    background: linear-gradient(135deg, #e8f5f9, #b3e5fc);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-left: 5px solid #00acc1;
+}
+
+.expanded-places-title {
+    font-size: 24px;
+    color: #00695c;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.places-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.place-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 172, 193, 0.2);
+    transition: all 0.3s ease;
+    border-top: 4px solid #00acc1;
+}
+
+.place-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 172, 193, 0.4);
+    border-top-color: #ff4d6d;
+}
+
+.place-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00695c;
+    margin-bottom: 8px;
+}
+
+.place-location {
+    font-size: 14px;
+    color: #00acc1;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.place-description {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
 /* Countdown Timer */
 .countdown-section {
     background: linear-gradient(135deg, #ff6b9d, #ff4d6d);
@@ -963,6 +1020,14 @@ body {
     .story-paragraph, .chapter-text, .rejection-message {
         font-size: 16px;
     }
+
+    .places-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .expanded-places, .expanded-activities {
+        padding: 20px;
+    }
 }
 </style>
 </head>
@@ -1131,6 +1196,14 @@ body {
                 <ul class="expanded-activities-list" id="expandedActivities">
                     <li>Loading...</li>
                 </ul>
+            </div>
+
+            <!-- Romantic Places in Nepal -->
+            <div class="expanded-places">
+                <div class="expanded-places-title">📍 Romantic Places to Visit in Nepal</div>
+                <div class="places-grid" id="expandedPlaces">
+                    <div>Loading...</div>
+                </div>
             </div>
         </div>
 
@@ -1377,6 +1450,11 @@ const valentineWeek = [
             "💌 Write a heartfelt note expressing your admiration",
             "🍽️ Have a romantic dinner under candlelight",
             "🎵 Create a playlist of songs that remind you of each other"
+        ],
+        places: [
+            { name: "Garden of Dreams", location: "Kathmandu", description: "A peaceful Himalayan garden with stunning mountain views, perfect for exchanging roses and romantic walks" },
+            { name: "Narayanhiti Palace Museum Gardens", location: "Kathmandu", description: "Beautiful royal gardens ideal for romantic photography and intimate moments" },
+            { name: "Godavari Village & Botanical Garden", location: "Kathmandu Valley", description: "Serene location with scenic views and local flower shops to gift roses" }
         ]
     },
     {
@@ -1399,6 +1477,11 @@ const valentineWeek = [
             "📝 Write down your promises to each other",
             "🎉 Share the news with loved ones",
             "💑 Take couple's photos to commemorate the moment"
+        ],
+        places: [
+            { name: "Nagarkot Sunset Point", location: "Bhaktapur", description: "Watch a breathtaking sunset together while making your proposal—with Himalayan views as the backdrop" },
+            { name: "Changu Narayan Temple", location: "Kathmandu Valley", description: "An ancient, romantic temple complex perfect for a spiritual proposal moment" },
+            { name: "Dhulikhel Old City", location: "Dhulikhel", description: "Charming historic city with scenic spots ideal for romantic proposal photography" }
         ]
     },
     {
@@ -1421,6 +1504,11 @@ const valentineWeek = [
             "🛁 Enjoy a chocolate-scented bath together",
             "🎂 Bake a chocolate cake and feed each other",
             "🍫 Have a chocolate fondue night with fruits"
+        ],
+        places: [
+            { name: "Kaiser Cafe", location: "Kathmandu", description: "Cozy café famous for hot chocolate and brownies—perfect for sweet indulgence" },
+            { name: "Maya Devi Temple Area", location: "Kathmandu", description: "Romantic neighborhood with charming cafés and dessert shops" },
+            { name: "Thamel District", location: "Kathmandu", description: "Vibrant area with numerous chocolate shops, bakeries, and romantic eateries" }
         ]
     },
     {
@@ -1443,6 +1531,11 @@ const valentineWeek = [
             "💤 Create a comfortable cozy corner together",
             "📖 Read stories to each other",
             "🧸 Take cute couple photos with plushies"
+        ],
+        places: [
+            { name: "Phewa Lake, Pokhara", location: "Pokhara", description: "A serene lakeside retreat perfect for cozy moments and romantic cuddles with mountain reflections" },
+            { name: "Gokarna Resort", location: "Kathmandu Valley", description: "Peaceful nature resort ideal for a cozy getaway together" },
+            { name: "Shivapuri National Park", location: "Kathmandu", description: "Quiet forest area for peaceful cuddles and nature bonding" }
         ]
     },
     {
@@ -1465,6 +1558,11 @@ const valentineWeek = [
             "🕯️ Light candles while making your promises",
             "🎁 Create matching promise rings or bracelets",
             "📸 Take a photo sealing your promises"
+        ],
+        places: [
+            { name: "Pashupatinath Temple", location: "Kathmandu", description: "Sacred temple on the Bagmati River—perfect for making spiritual promises to each other" },
+            { name: "Boudhanath Stupa", location: "Kathmandu", description: "Peaceful spiritual location ideal for exchanging heartfelt promises" },
+            { name: "Swayambhunath Temple", location: "Kathmandu", description: "Ancient temple with panoramic city views for promise-making moments" }
         ]
     },
     {
@@ -1487,6 +1585,11 @@ const valentineWeek = [
             "💐 Kiss in different romantic locations",
             "🎵 Kiss while dancing to your favorite love song",
             "📝 Write love notes hiding kisses (lip prints) in them"
+        ],
+        places: [
+            { name: "Kathmandu Durbar Square", location: "Kathmandu", description: "Historic square with romantic corners perfect for kisses under ancient monuments" },
+            { name: "Pokhara Lakeside Promenade", location: "Pokhara", description: "Scenic lakeside walk with starlit backdrop—ideal for romantic kisses" },
+            { name: "Chitwan National Park Sunset Points", location: "Chitwan", description: "Wildlife reserve with romantic sunset locations for unforgettable kiss moments" }
         ]
     },
     {
@@ -1510,6 +1613,11 @@ const valentineWeek = [
             "💑 Renew your vows or make new commitments",
             "🎉 Celebrate with family and friends if desired",
             "🔔 Start planning for your future together"
+        ],
+        places: [
+            { name: "Bhaktapur Durbar Square", location: "Bhaktapur", description: "Medieval city perfect for celebrating with traditional ambiance and romantic old-world charm" },
+            { name: "Nagarkot Panorama Resort", location: "Nagarkot", description: "Hilltop resort with stunning Himalayan views—ideal for a romantic Valentine's dinner" },
+            { name: "Bandipur Historic City", location: "Bandipur", description: "Beautifully preserved trading town perfect for romantic walks and fine dining experiences" }
         ]
     }
 ];
@@ -1584,6 +1692,24 @@ function showDayDetails(dayData, yourName, theirName) {
     activitiesList.innerHTML = dayData.activities
         .map(activity => `<li>${activity}</li>`)
         .join('');
+    
+    // Display places in Nepal
+    const placesContainer = document.getElementById('expandedPlaces');
+    placesContainer.innerHTML = '';
+    if (dayData.places && dayData.places.length > 0) {
+        dayData.places.forEach(place => {
+            const placeCard = document.createElement('div');
+            placeCard.className = 'place-card';
+            placeCard.innerHTML = `
+                <div class="place-name">${place.name}</div>
+                <div class="place-location">📍 ${place.location}</div>
+                <div class="place-description">${place.description}</div>
+            `;
+            placesContainer.appendChild(placeCard);
+        });
+    } else {
+        placesContainer.innerHTML = '<div>No specific places recommended for this day.</div>';
+    }
     
     document.getElementById('dayExpanded').scrollIntoView({ behavior: 'smooth' });
 }
