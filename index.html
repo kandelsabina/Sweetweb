@@ -145,6 +145,52 @@ body {
 }
 
 /* Home Button */
+/* Back Button */
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-button:hover {
+    transform: scale(1.15) translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.back-button:active {
+    transform: scale(0.95);
+}
+
+.back-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Mobile responsive back button */
+@media (max-width: 768px) {
+    .back-button {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        top: 15px;
+        left: 15px;
+    }
+}
+
 .home-button {
     position: fixed;
     top: 20px;
@@ -1033,6 +1079,11 @@ body {
 </head>
 <body>
 
+<!-- Back Button (Visible on non-home screens) -->
+<button class="back-button" id="backButton" onclick="goBackPage()" title="Go Back">
+    <span class="back-icon">←</span>
+</button>
+
 <!-- Home Button (Always Visible) -->
 <button class="home-button" onclick="goToHome()" title="Back to Home">
     <span class="home-icon">🏠</span>
@@ -1272,12 +1323,14 @@ function createFloatingHearts() {
 function sayYes() {
     document.getElementById('proposalScreen').style.display = 'none';
     document.getElementById('nameInputScreen').style.display = 'flex';
+    updateBackButtonVisibility();
 }
 
 // Handle NO click
 function sayNo() {
     document.getElementById('proposalScreen').style.display = 'none';
     document.getElementById('rejectionScreen').style.display = 'flex';
+    updateBackButtonVisibility();
 }
 
 // Start the love story
@@ -1301,6 +1354,7 @@ function startStory(event) {
     // Show story screen
     document.getElementById('nameInputScreen').style.display = 'none';
     document.getElementById('storyScreen').style.display = 'block';
+    updateBackButtonVisibility();
     document.getElementById('storyScreen').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -1417,9 +1471,65 @@ function goToHome() {
         clearInterval(window.currentTimerInterval);
     }
     
+    // Hide back button on home screen
+    document.getElementById('backButton').style.display = 'none';
+    
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
     document.getElementById('proposalScreen').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Go back to previous page
+function goBackPage() {
+    const proposalScreen = document.getElementById('proposalScreen');
+    const nameInputScreen = document.getElementById('nameInputScreen');
+    const storyScreen = document.getElementById('storyScreen');
+    const rejectionScreen = document.getElementById('rejectionScreen');
+    const weekScreen = document.getElementById('weekScreen');
+    const dayExpanded = document.getElementById('dayExpanded');
+    
+    // Determine which screen is currently visible and go back accordingly
+    if (dayExpanded.style.display === 'block') {
+        // From day details → back to week
+        dayExpanded.style.display = 'none';
+        weekScreen.style.display = 'block';
+        weekScreen.scrollIntoView({ behavior: 'smooth' });
+    } else if (weekScreen.style.display === 'block') {
+        // From week plan → back to story
+        weekScreen.style.display = 'none';
+        storyScreen.style.display = 'block';
+        storyScreen.scrollIntoView({ behavior: 'smooth' });
+    } else if (storyScreen.style.display === 'block') {
+        // From story → back to name input
+        storyScreen.style.display = 'none';
+        nameInputScreen.style.display = 'flex';
+        nameInputScreen.scrollIntoView({ behavior: 'smooth' });
+    } else if (nameInputScreen.style.display === 'flex') {
+        // From name input → back to proposal
+        nameInputScreen.style.display = 'none';
+        proposalScreen.style.display = 'flex';
+        document.getElementById('backButton').style.display = 'none';
+        proposalScreen.scrollIntoView({ behavior: 'smooth' });
+    } else if (rejectionScreen.style.display === 'block') {
+        // From rejection → back to proposal
+        rejectionScreen.style.display = 'none';
+        proposalScreen.style.display = 'flex';
+        document.getElementById('backButton').style.display = 'none';
+        proposalScreen.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// Update back button visibility based on current screen
+function updateBackButtonVisibility() {
+    const proposalScreen = document.getElementById('proposalScreen');
+    const backButton = document.getElementById('backButton');
+    
+    // Show back button if not on proposal screen
+    if (proposalScreen.style.display !== 'flex') {
+        backButton.style.display = 'flex';
+    } else {
+        backButton.style.display = 'none';
+    }
 }
 
 // Try again from rejection
@@ -1660,6 +1770,7 @@ function viewWeekPlan() {
         daysGrid.appendChild(card);
     });
     
+    updateBackButtonVisibility();
     document.getElementById('weekScreen').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -1711,6 +1822,7 @@ function showDayDetails(dayData, yourName, theirName) {
         placesContainer.innerHTML = '<div>No specific places recommended for this day.</div>';
     }
     
+    updateBackButtonVisibility();
     document.getElementById('dayExpanded').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -1859,6 +1971,7 @@ function fetchRealSong(songName, artistName) {
 function backToStory() {
     document.getElementById('dayExpanded').style.display = 'none';
     document.getElementById('weekScreen').style.display = 'block';
+    updateBackButtonVisibility();
     document.getElementById('weekScreen').scrollIntoView({ behavior: 'smooth' });
 }
 
