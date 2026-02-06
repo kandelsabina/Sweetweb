@@ -3,8 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A personalized interactive Valentine's love story with playlists, countdowns, and day-by-day plans.">
+    <meta name="theme-color" content="#ff4d6d">
+    <meta property="og:title" content="Our Love Story">
+    <meta property="og:description" content="Create a personalized Valentine's love story with music, places, and surprises.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="/favicon.ico">
 <title>Our Love Story 💕</title>
 <style>
+:root{
+    --bg-1: linear-gradient(135deg, #ffe4ec 0%, #ffd1dc 50%, #ffb3c6 100%);
+    --card-bg: #ffffff;
+    --accent: #ff4d6d;
+    --muted: #666;
+    --text: #333;
+}
+
+/* Dark theme */
+[data-theme="dark"]{
+    --bg-1: linear-gradient(135deg, #0f1724 0%, #0b1220 100%);
+    --card-bg: #0b1220;
+    --accent: #ff7aa2;
+    --muted: #9aa4b2;
+    --text: #e6eef6;
+}
+
+body{ background: var(--bg-1); color: var(--text); }
+
+/* Sticky header */
+.site-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    z-index: 1200;
+    backdrop-filter: blur(6px);
+}
+.site-title{ font-size: 18px; font-weight: 700; color: var(--accent); }
+.header-actions{ display:flex; gap:10px; align-items:center; }
+.theme-toggle{ background: transparent; border: 2px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:10px; cursor:pointer; color:var(--text); }
+
 * {
     margin: 0;
     padding: 0;
@@ -13,8 +58,9 @@
 
 body {
     font-family: 'Poppins', 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #ffe4ec 0%, #ffd1dc 50%, #ffb3c6 100%);
-    color: #333;
+    background: var(--bg-1);
+    color: var(--text);
+    padding-top: 72px;
     min-height: 100vh;
     overflow-x: hidden;
 }
@@ -1131,6 +1177,15 @@ body {
 </head>
 <body>
 
+<!-- Site Header -->
+<header class="site-header">
+    <div class="site-title">Our Love Story</div>
+    <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <a class="theme-toggle" href="mailto:hello@example.com" title="Contact">✉️ Contact</a>
+    </div>
+</header>
+
 <!-- Back Button (Visible on non-home screens) -->
 <button class="back-button" id="backButton" onclick="goBackPage()" title="Go Back">
     <span class="back-icon">←</span>
@@ -2040,6 +2095,35 @@ function backToStory() {
 document.addEventListener('DOMContentLoaded', function() {
     createFloatingHearts();
 });
+
+// Theme toggle: persist preference in localStorage
+function applyTheme(theme) {
+    if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = document.getElementById('themeToggle'); if (btn) { btn.textContent = '☀️'; btn.setAttribute('aria-pressed','true'); }
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        const btn = document.getElementById('themeToggle'); if (btn) { btn.textContent = '🌙'; btn.setAttribute('aria-pressed','false'); }
+    }
+}
+
+function toggleTheme() {
+    const current = localStorage.getItem('site-theme') || 'light';
+    const next = (current === 'dark') ? 'light' : 'dark';
+    localStorage.setItem('site-theme', next);
+    applyTheme(next);
+}
+
+function initTheme() {
+    const saved = localStorage.getItem('site-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = saved ? saved : (prefersDark ? 'dark' : 'light');
+    applyTheme(theme);
+    const btn = document.getElementById('themeToggle'); if (btn) { btn.addEventListener('click', toggleTheme); }
+}
+
+// Initialize theme separately (keeps existing init behavior)
+initTheme();
 </script>
 
 </body>
