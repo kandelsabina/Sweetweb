@@ -755,12 +755,12 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     border-left: 4px solid #ffb3c6;
+    justify-content: space-between;
 }
 
 .music-item:hover {
     background: #f0f0f0;
     border-left-color: #ff4d6d;
-    transform: translateX(5px);
 }
 
 .music-play-btn {
@@ -781,6 +781,11 @@ body {
 .music-artist {
     font-size: 14px;
     color: #999;
+}
+
+.music-links {
+    display: flex;
+    gap: 8px;
 }
 
 /* Day Countdown Grid */
@@ -831,6 +836,21 @@ body {
 
     .proposal-buttons {
         gap: 15px;
+    }
+
+    .music-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .music-links {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .music-links a {
+        flex: 1;
+        text-align: center;
     }
 
     .story-paragraph, .chapter-text, .rejection-message {
@@ -1434,8 +1454,19 @@ function showDayDetails(dayData, yourName, theirName) {
 
 // Update countdown timer for each day
 function updateCountdownTimer(targetDate) {
-    const today = new Date();
-    const target = new Date('2026-' + targetDate.split(' ')[1] + '-' + targetDate.split(' ')[2]);
+    // Parse date string like "February 7" to proper date
+    const months = {
+        'January': 0, 'February': 1, 'March': 2, 'April': 3,
+        'May': 4, 'June': 5, 'July': 6, 'August': 7,
+        'September': 8, 'October': 9, 'November': 10, 'December': 11
+    };
+    
+    const dateparts = targetDate.split(' ');
+    const monthName = dateparts[0];
+    const dayNum = parseInt(dateparts[1]);
+    
+    const monthIndex = months[monthName];
+    const target = new Date(2026, monthIndex, dayNum);
     
     function formatCountdown() {
         const now = new Date();
@@ -1456,26 +1487,36 @@ function updateCountdownTimer(targetDate) {
     }
     
     formatCountdown();
-    setInterval(formatCountdown, 1000);
+    const timerInterval = setInterval(formatCountdown, 1000);
+    
+    // Store interval ID to clear if needed
+    window.currentTimerInterval = timerInterval;
 }
 
-// Display music playlist
+// Display music playlist with embedded players
 function displayMusicPlaylist(musicList) {
     const playlistContainer = document.getElementById('musicPlaylist');
     playlistContainer.innerHTML = '';
     
-    musicList.forEach((song) => {
+    musicList.forEach((song, index) => {
         const musicItem = document.createElement('div');
         musicItem.className = 'music-item';
         
-        // Create YouTube search link
-        const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(song.name + ' ' + song.artist)}`;
+        // Create Spotify search URL
+        const spotifySearchUrl = `https://open.spotify.com/search/${encodeURIComponent(song.name + ' ' + song.artist)}`;
+        const appleSearchUrl = `https://music.apple.com/search?term=${encodeURIComponent(song.name + ' ' + song.artist)}`;
+        const youtubeSearchUrl = `https://music.youtube.com/search?q=${encodeURIComponent(song.name + ' ' + song.artist)}`;
         
         musicItem.innerHTML = `
-            <div class="music-play-btn" onclick="window.open('${youtubeSearchUrl}', '_blank')">▶️</div>
+            <div class="music-play-btn">🎵</div>
             <div class="music-info">
                 <div class="music-name">${song.name}</div>
                 <div class="music-artist">${song.artist}</div>
+            </div>
+            <div class="music-links" style="display: flex; gap: 8px; font-size: 12px;">
+                <a href="${spotifySearchUrl}" target="_blank" style="padding: 5px 10px; background: #1DB954; color: white; border-radius: 5px; text-decoration: none; cursor: pointer;">Spotify</a>
+                <a href="${appleSearchUrl}" target="_blank" style="padding: 5px 10px; background: #FA243C; color: white; border-radius: 5px; text-decoration: none; cursor: pointer;">Apple</a>
+                <a href="${youtubeSearchUrl}" target="_blank" style="padding: 5px 10px; background: #FF0000; color: white; border-radius: 5px; text-decoration: none; cursor: pointer;">YouTube</a>
             </div>
         `;
         
