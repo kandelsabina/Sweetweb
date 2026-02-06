@@ -219,6 +219,58 @@ body {
     transform: scale(0.95);
 }
 
+/* Place card image and content */
+.place-card {
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    margin-bottom: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.place-image {
+    width: 180px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.place-content {
+    flex: 1;
+}
+
+.place-name {
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 6px;
+}
+
+.place-location {
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.place-description {
+    color: #444;
+    font-size: 14px;
+}
+
+.map-link {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: #00acc1;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+
 .home-icon {
     display: flex;
     justify-content: center;
@@ -1562,9 +1614,9 @@ const valentineWeek = [
             "🎵 Create a playlist of songs that remind you of each other"
         ],
         places: [
-            { name: "Garden of Dreams", location: "Kathmandu", description: "A peaceful Himalayan garden with stunning mountain views, perfect for exchanging roses and romantic walks" },
-            { name: "Narayanhiti Palace Museum Gardens", location: "Kathmandu", description: "Beautiful royal gardens ideal for romantic photography and intimate moments" },
-            { name: "Godavari Village & Botanical Garden", location: "Kathmandu Valley", description: "Serene location with scenic views and local flower shops to gift roses" }
+            { name: "Garden of Dreams", location: "Kathmandu", description: "A peaceful Himalayan garden with stunning mountain views, perfect for exchanging roses and romantic walks", lat: 27.7172, lng: 85.3240, image: "https://images.unsplash.com/photo-1579852168917-48416c8ea1ff?w=500&h=300&fit=crop" },
+            { name: "Narayanhiti Palace Museum Gardens", location: "Kathmandu", description: "Beautiful royal gardens ideal for romantic photography and intimate moments", lat: 27.7245, lng: 85.3123, image: "https://images.unsplash.com/photo-1583258292688-d0213dc5d1a9?w=500&h=300&fit=crop" },
+            { name: "Godavari Village & Botanical Garden", location: "Kathmandu Valley", description: "Serene location with scenic views and local flower shops to gift roses", lat: 27.6800, lng: 85.3900, image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=500&h=300&fit=crop" }
         ]
     },
     {
@@ -1589,9 +1641,9 @@ const valentineWeek = [
             "💑 Take couple's photos to commemorate the moment"
         ],
         places: [
-            { name: "Nagarkot Sunset Point", location: "Bhaktapur", description: "Watch a breathtaking sunset together while making your proposal—with Himalayan views as the backdrop" },
-            { name: "Changu Narayan Temple", location: "Kathmandu Valley", description: "An ancient, romantic temple complex perfect for a spiritual proposal moment" },
-            { name: "Dhulikhel Old City", location: "Dhulikhel", description: "Charming historic city with scenic spots ideal for romantic proposal photography" }
+              { name: "Nagarkot Sunset Point", location: "Bhaktapur", description: "Watch a breathtaking sunset together while making your proposal—with Himalayan views as the backdrop", lat: 27.7114, lng: 85.5178, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop" },
+              { name: "Changu Narayan Temple", location: "Kathmandu Valley", description: "An ancient, romantic temple complex perfect for a spiritual proposal moment", lat: 27.6935, lng: 85.4293, image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=500&h=300&fit=crop" },
+              { name: "Dhulikhel Old City", location: "Dhulikhel", description: "Charming historic city with scenic spots ideal for romantic proposal photography", lat: 27.6194, lng: 85.4189, image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=500&h=300&fit=crop" }
         ]
     },
     {
@@ -1616,9 +1668,9 @@ const valentineWeek = [
             "🍫 Have a chocolate fondue night with fruits"
         ],
         places: [
-            { name: "Kaiser Cafe", location: "Kathmandu", description: "Cozy café famous for hot chocolate and brownies—perfect for sweet indulgence" },
-            { name: "Maya Devi Temple Area", location: "Kathmandu", description: "Romantic neighborhood with charming cafés and dessert shops" },
-            { name: "Thamel District", location: "Kathmandu", description: "Vibrant area with numerous chocolate shops, bakeries, and romantic eateries" }
+              { name: "Kaiser Cafe", location: "Kathmandu", description: "Cozy café famous for hot chocolate and brownies—perfect for sweet indulgence", lat: 27.7245, lng: 85.3311, image: "https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=500&h=300&fit=crop" },
+              { name: "Maya Devi Temple Area", location: "Kathmandu", description: "Romantic neighborhood with charming cafés and dessert shops", lat: 27.7128, lng: 85.3163, image: "https://images.unsplash.com/photo-1537432376769-00f5c814626d?w=500&h=300&fit=crop" },
+              { name: "Thamel District", location: "Kathmandu", description: "Vibrant area with numerous chocolate shops, bakeries, and romantic eateries", lat: 27.7249, lng: 85.3274, image: "https://images.unsplash.com/photo-1555939594-58d7cb561140?w=500&h=300&fit=crop" }
         ]
     },
     {
@@ -1643,9 +1695,9 @@ const valentineWeek = [
             "🧸 Take cute couple photos with plushies"
         ],
         places: [
-            { name: "Phewa Lake, Pokhara", location: "Pokhara", description: "A serene lakeside retreat perfect for cozy moments and romantic cuddles with mountain reflections" },
-            { name: "Gokarna Resort", location: "Kathmandu Valley", description: "Peaceful nature resort ideal for a cozy getaway together" },
-            { name: "Shivapuri National Park", location: "Kathmandu", description: "Quiet forest area for peaceful cuddles and nature bonding" }
+              { name: "Phewa Lake, Pokhara", location: "Pokhara", description: "A serene lakeside retreat perfect for cozy moments and romantic cuddles with mountain reflections", lat: 28.2096, lng: 83.9856, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop" },
+              { name: "Gokarna Resort", location: "Kathmandu Valley", description: "Peaceful nature resort ideal for a cozy getaway together", lat: 27.5920, lng: 85.2920, image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&h=300&fit=crop" },
+              { name: "Shivapuri National Park", location: "Kathmandu", description: "Quiet forest area for peaceful cuddles and nature bonding", lat: 27.8500, lng: 85.4500, image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop" }
         ]
     },
     {
@@ -1670,9 +1722,9 @@ const valentineWeek = [
             "📸 Take a photo sealing your promises"
         ],
         places: [
-            { name: "Pashupatinath Temple", location: "Kathmandu", description: "Sacred temple on the Bagmati River—perfect for making spiritual promises to each other" },
-            { name: "Boudhanath Stupa", location: "Kathmandu", description: "Peaceful spiritual location ideal for exchanging heartfelt promises" },
-            { name: "Swayambhunath Temple", location: "Kathmandu", description: "Ancient temple with panoramic city views for promise-making moments" }
+              { name: "Pashupatinath Temple", location: "Kathmandu", description: "Sacred temple on the Bagmati River—perfect for making spiritual promises to each other", lat: 27.7245, lng: 85.3431, image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=500&h=300&fit=crop" },
+              { name: "Boudhanath Stupa", location: "Kathmandu", description: "Peaceful spiritual location ideal for exchanging heartfelt promises", lat: 27.7216, lng: 85.3636, image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=500&h=300&fit=crop" },
+              { name: "Swayambhunath Temple", location: "Kathmandu", description: "Ancient temple with panoramic city views for promise-making moments", lat: 27.7109, lng: 85.2895, image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&h=300&fit=crop" }
         ]
     },
     {
@@ -1697,9 +1749,9 @@ const valentineWeek = [
             "📝 Write love notes hiding kisses (lip prints) in them"
         ],
         places: [
-            { name: "Kathmandu Durbar Square", location: "Kathmandu", description: "Historic square with romantic corners perfect for kisses under ancient monuments" },
-            { name: "Pokhara Lakeside Promenade", location: "Pokhara", description: "Scenic lakeside walk with starlit backdrop—ideal for romantic kisses" },
-            { name: "Chitwan National Park Sunset Points", location: "Chitwan", description: "Wildlife reserve with romantic sunset locations for unforgettable kiss moments" }
+              { name: "Kathmandu Durbar Square", location: "Kathmandu", description: "Historic square with romantic corners perfect for kisses under ancient monuments", lat: 27.7245, lng: 85.2985, image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=500&h=300&fit=crop" },
+              { name: "Pokhara Lakeside Promenade", location: "Pokhara", description: "Scenic lakeside walk with starlit backdrop—ideal for romantic kisses", lat: 28.2096, lng: 83.9862, image: "https://images.unsplash.com/photo-1505228395891-9a51e7e86e81?w=500&h=300&fit=crop" },
+              { name: "Chitwan National Park Sunset Points", location: "Chitwan", description: "Wildlife reserve with romantic sunset locations for unforgettable kiss moments", lat: 27.5768, lng: 84.3028, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop" }
         ]
     },
     {
@@ -1725,9 +1777,9 @@ const valentineWeek = [
             "🔔 Start planning for your future together"
         ],
         places: [
-            { name: "Bhaktapur Durbar Square", location: "Bhaktapur", description: "Medieval city perfect for celebrating with traditional ambiance and romantic old-world charm" },
-            { name: "Nagarkot Panorama Resort", location: "Nagarkot", description: "Hilltop resort with stunning Himalayan views—ideal for a romantic Valentine's dinner" },
-            { name: "Bandipur Historic City", location: "Bandipur", description: "Beautifully preserved trading town perfect for romantic walks and fine dining experiences" }
+              { name: "Bhaktapur Durbar Square", location: "Bhaktapur", description: "Medieval city perfect for celebrating with traditional ambiance and romantic old-world charm", lat: 27.6707, lng: 85.4305, image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=500&h=300&fit=crop" },
+              { name: "Nagarkot Panorama Resort", location: "Nagarkot", description: "Hilltop resort with stunning Himalayan views—ideal for a romantic Valentine's dinner", lat: 27.7114, lng: 85.5178, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop" },
+              { name: "Bandipur Historic City", location: "Bandipur", description: "Beautifully preserved trading town perfect for romantic walks and fine dining experiences", lat: 27.6194, lng: 85.4189, image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=500&h=300&fit=crop" }
         ]
     }
 ];
@@ -1812,9 +1864,13 @@ function showDayDetails(dayData, yourName, theirName) {
             const placeCard = document.createElement('div');
             placeCard.className = 'place-card';
             placeCard.innerHTML = `
-                <div class="place-name">${place.name}</div>
-                <div class="place-location">📍 ${place.location}</div>
-                <div class="place-description">${place.description}</div>
+                ${place.image ? `<img src="${place.image}" alt="${place.name}" class="place-image" onerror="this.src='https://via.placeholder.com/500x300?text=${encodeURIComponent(place.name)}'" />` : ''}
+                <div class="place-content">
+                    <div class="place-name">${place.name}</div>
+                    <div class="place-location">📍 ${place.location}</div>
+                    <div class="place-description">${place.description}</div>
+                    ${place.lat && place.lng ? `<a href="https://www.google.com/maps/?q=${place.lat},${place.lng}" target="_blank" class="map-link">🗺️ View on Google Maps</a>` : ''}
+                </div>
             `;
             placesContainer.appendChild(placeCard);
         });
