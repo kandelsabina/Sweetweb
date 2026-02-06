@@ -469,6 +469,197 @@ body {
     box-shadow: 0 8px 20px rgba(255,77,109,0.3);
 }
 
+/* Valentine Week Screen */
+.week-screen {
+    display: none;
+    animation: fadeIn 1s ease;
+    padding-bottom: 100px;
+}
+
+.week-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.week-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.week-title {
+    font-size: 56px;
+    color: #ff4d6d;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.week-subtitle {
+    font-size: 24px;
+    color: #d6336c;
+    margin-bottom: 10px;
+}
+
+.week-intro {
+    font-size: 18px;
+    color: #666;
+    max-width: 800px;
+    margin: 20px auto;
+    line-height: 1.8;
+}
+
+/* Days Grid */
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin: 50px 0;
+}
+
+.day-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.4s ease;
+    border-top: 5px solid #ff4d6d;
+    cursor: pointer;
+}
+
+.day-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 50px rgba(255,77,109,0.3);
+}
+
+.day-emoji {
+    font-size: 60px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.day-name {
+    font-size: 28px;
+    color: #ff4d6d;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.day-date {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.day-story {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.day-activities {
+    background: #fff5f7;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.activities-title {
+    font-size: 14px;
+    color: #ff4d6d;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.activities-list {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.8;
+}
+
+.activities-list li {
+    margin-bottom: 8px;
+}
+
+/* Expanded Day View */
+.day-expanded {
+    display: none;
+    animation: fadeIn 1s ease;
+    padding-bottom: 100px;
+}
+
+.expanded-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.expanded-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.expanded-emoji {
+    font-size: 100px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.expanded-title {
+    font-size: 48px;
+    color: #ff4d6d;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.expanded-date {
+    font-size: 18px;
+    color: #d6336c;
+    margin-bottom: 30px;
+}
+
+.expanded-content {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.expanded-story {
+    font-size: 18px;
+    color: #555;
+    line-height: 2;
+    margin-bottom: 30px;
+}
+
+.expanded-activities {
+    background: linear-gradient(135deg, #fff5f7, #ffe4ec);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-left: 5px solid #ff4d6d;
+}
+
+.expanded-activities-title {
+    font-size: 24px;
+    color: #ff4d6d;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.expanded-activities-list {
+    font-size: 16px;
+    color: #555;
+    line-height: 2;
+}
+
+.expanded-activities-list li {
+    margin-bottom: 15px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .proposal-card, .name-card, .rejection-card {
@@ -597,7 +788,57 @@ body {
         </div>
 
         <div class="nav-buttons">
+            <button class="nav-btn" onclick="viewWeekPlan()">View Our Valentine Week Plan 💑</button>
             <button class="nav-btn" onclick="goBack()">← Back to Start</button>
+        </div>
+    </div>
+</div>
+
+<!-- Valentine Week Screen -->
+<div class="week-screen" id="weekScreen">
+    <div class="week-container">
+        <div class="week-header">
+            <div class="week-title" id="weekTitle">Our Valentine's Week 💑</div>
+            <div class="week-subtitle">7 Days of Love & Celebration</div>
+            <p class="week-intro" id="weekIntro">
+                A complete journey through Valentine's Week with special moments, stories, and activities planned for each beautiful day.
+            </p>
+        </div>
+
+        <div class="days-grid" id="daysGrid">
+            <!-- Days will be populated here -->
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="backToStory()">← Back to Our Story</button>
+        </div>
+    </div>
+</div>
+
+<!-- Expanded Day View -->
+<div class="day-expanded" id="dayExpanded">
+    <div class="expanded-container">
+        <div class="expanded-header">
+            <span class="expanded-emoji" id="expandedEmoji">💕</span>
+            <div class="expanded-title" id="expandedTitle">Day Name</div>
+            <div class="expanded-date" id="expandedDate">Date</div>
+        </div>
+
+        <div class="expanded-content">
+            <div class="expanded-story" id="expandedStory">
+                Loading...
+            </div>
+
+            <div class="expanded-activities">
+                <div class="expanded-activities-title">🎯 What to Do This Day</div>
+                <ul class="expanded-activities-list" id="expandedActivities">
+                    <li>Loading...</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="viewWeekPlan()">← Back to Week Plan</button>
         </div>
     </div>
 </div>
@@ -792,6 +1033,193 @@ function startOver() {
     document.getElementById('rejectionScreen').style.display = 'none';
     document.getElementById('proposalScreen').style.display = 'flex';
     document.getElementById('proposalScreen').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Valentine's Week Data
+const valentineWeek = [
+    {
+        day: 1,
+        name: "Rose Day",
+        emoji: "🌹",
+        date: "February 7",
+        story: "Rose Day marks the beginning of Valentine's Week, a celebration of love's first whispers. It's a day to express admiration and affection through the timeless symbol of a rose. Just as a rose blooms with delicate beauty, your love story is beginning to unfold in the most magical way. The crimson petals represent not just passion, but the care, attention, and devotion that comes with true love.",
+        activities: [
+            "💌 Give each other a beautiful rose or flowers",
+            "🌹 Share what you love most about each other",
+            "📸 Take photos together in a garden or flower shop",
+            "💌 Write a heartfelt note expressing your admiration",
+            "🍽️ Have a romantic dinner under candlelight",
+            "🎵 Create a playlist of songs that remind you of each other"
+        ]
+    },
+    {
+        day: 2,
+        name: "Propose Day",
+        emoji: "💍",
+        date: "February 8",
+        story: "Propose Day is about taking that leap of faith and asking the most important question. Whether it's a marriage proposal or a promise of forever, this day celebrates commitment and the courage to ask someone to be your forever. It's about vulnerability, honesty, and saying the words that matter most. On this day, two hearts unite with a promise that transcends time itself.",
+        activities: [
+            "💍 Plan a special surprise proposal or renewal of vows",
+            "🎁 Exchange meaningful gifts or rings",
+            "💬 Have deep conversations about your future together",
+            "🍾 Celebrate with champagne or special beverages",
+            "📝 Write down your promises to each other",
+            "🎉 Share the news with loved ones",
+            "💑 Take couple's photos to commemorate the moment"
+        ]
+    },
+    {
+        day: 3,
+        name: "Chocolate Day",
+        emoji: "🍫",
+        date: "February 9",
+        story: "Chocolate Day celebrates the sweetness of love. Just as chocolate melts on your tongue and brings joy, love sweetens every moment of life. It's a day to indulge in the small pleasures together, to enjoy the richness of companionship, and to savor every second spent with your beloved. Chocolate represents not just sweetness, but comfort, warmth, and the luxurious feeling of being loved.",
+        activities: [
+            "🍫 Share a box of chocolates together",
+            "👨‍🍳 Make homemade chocolate desserts together",
+            "🍰 Visit a chocolate shop or café",
+            "💝 Create a chocolate tasting experience",
+            "🛁 Enjoy a chocolate-scented bath together",
+            "🎂 Bake a chocolate cake and feed each other",
+            "🍫 Have a chocolate fondue night with fruits"
+        ]
+    },
+    {
+        day: 4,
+        name: "Teddy Day",
+        emoji: "🧸",
+        date: "February 10",
+        story: "Teddy Day celebrates the comfort and warmth that comes with unconditional love. A teddy bear symbolizes comfort, protection, and the innocent purity of affection. It's a day to embrace each other, to find solace in each other's arms, and to remind your partner that you'll always be there to comfort them. Like a teddy bear, love provides warmth through the coldest nights.",
+        activities: [
+            "🧸 Give each other matching teddy bears or plushies",
+            "🤗 Have a cozy cuddle session with blankets and pillows",
+            "🍿 Watch your favorite romantic movies together",
+            "☕ Have hot chocolate while snuggled up",
+            "💤 Create a comfortable cozy corner together",
+            "📖 Read stories to each other",
+            "🧸 Take cute couple photos with plushies"
+        ]
+    },
+    {
+        day: 5,
+        name: "Promise Day",
+        emoji: "🤝",
+        date: "February 11",
+        story: "Promise Day is about making vows and commitments that will last a lifetime. It's not just about grand gestures, but small promises to be there through thick and thin. To listen when they need to talk, to hold them when they cry, and to celebrate their victories as if they were your own. Every promise made on this day becomes the foundation of a lasting relationship.",
+        activities: [
+            "🤝 Exchange written promises to each other",
+            "💕 Make promises you'll keep forever",
+            "📖 Create a 'Promise Jar' and add promises regularly",
+            "💌 Write a letter of commitment",
+            "🕯️ Light candles while making your promises",
+            "🎁 Create matching promise rings or bracelets",
+            "📸 Take a photo sealing your promises"
+        ]
+    },
+    {
+        day: 6,
+        name: "Kiss Day",
+        emoji: "😘",
+        date: "February 12",
+        story: "Kiss Day celebrates the magic of affection and connection. A kiss is more than just a physical act—it's a language of love that words cannot express. It's the moment when two souls touch, when vulnerability meets trust, and when passion speaks louder than words. Every kiss is a promise, a question, an answer, and a celebration all at once.",
+        activities: [
+            "😘 Share multiple romantic kisses throughout the day",
+            "💋 Learn about different kiss styles and meanings",
+            "🌙 Have a sunset or starlit kiss",
+            "🎬 Watch romantic kiss scenes from movies",
+            "💐 Kiss in different romantic locations",
+            "🎵 Kiss while dancing to your favorite love song",
+            "📝 Write love notes hiding kisses (lip prints) in them"
+        ]
+    },
+    {
+        day: 7,
+        name: "Valentine's Day",
+        emoji: "💕",
+        date: "February 14",
+        story: "Valentine's Day is the culmination of a week of love celebration. It's the day when the entire world joins in celebrating romance and affection. But for you, it's more than just a day—it's a milestone in your love story. It's a moment to reflect on how far you've come, to appreciate every moment shared, and to look forward to a lifetime of beautiful tomorrows together. This is the day you celebrate not just love, but YOUR love.",
+        activities: [
+            "💕 Exchange thoughtful Valentine's Day gifts",
+            "🍽️ Have a romantic dinner reservation",
+            "💌 Exchange love letters",
+            "🎁 Plan a surprise getaway or staycation",
+            "🌹 Create a romantic atmosphere at home",
+            "💑 Renew your vows or make new commitments",
+            "🎉 Celebrate with family and friends if desired",
+            "🔔 Start planning for your future together"
+        ]
+    }
+];
+
+// Display Valentine's Week Plan
+function viewWeekPlan() {
+    document.getElementById('storyScreen').style.display = 'none';
+    document.getElementById('weekScreen').style.display = 'block';
+    
+    const yourName = document.getElementById('yourName').value;
+    const theirName = document.getElementById('theirName').value;
+    
+    // Personalize the week intro
+    document.getElementById('weekIntro').textContent = 
+        `${yourName} and ${theirName}, this is your special Valentine's Week. Seven days of celebration, each with its own beautiful meaning and activities. Let's make every moment count!`;
+    
+    // Generate day cards
+    const daysGrid = document.getElementById('daysGrid');
+    daysGrid.innerHTML = '';
+    
+    valentineWeek.forEach((dayData) => {
+        const card = document.createElement('div');
+        card.className = 'day-card';
+        card.onclick = () => showDayDetails(dayData, yourName, theirName);
+        
+        card.innerHTML = `
+            <span class="day-emoji">${dayData.emoji}</span>
+            <div class="day-name">${dayData.name}</div>
+            <div class="day-date">${dayData.date}</div>
+            <div class="day-story">${dayData.story.substring(0, 100)}...</div>
+            <div class="day-activities">
+                <div class="activities-title">Activities</div>
+                <div class="activities-list">
+                    ${dayData.activities.slice(0, 2).map(a => `<li>${a}</li>`).join('')}
+                    <li><strong>+ ${dayData.activities.length - 2} more →</strong></li>
+                </div>
+            </div>
+        `;
+        
+        daysGrid.appendChild(card);
+    });
+    
+    document.getElementById('weekScreen').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Show expanded day view
+function showDayDetails(dayData, yourName, theirName) {
+    document.getElementById('weekScreen').style.display = 'none';
+    document.getElementById('dayExpanded').style.display = 'block';
+    
+    // Personalize the story with names
+    let personalizedStory = dayData.story
+        .replace(/your beloved/g, `${theirName}`)
+        .replace(/two hearts/g, `${yourName} and ${theirName}'s hearts`);
+    
+    document.getElementById('expandedEmoji').textContent = dayData.emoji;
+    document.getElementById('expandedTitle').textContent = dayData.name;
+    document.getElementById('expandedDate').textContent = dayData.date;
+    document.getElementById('expandedStory').textContent = personalizedStory;
+    
+    const activitiesList = document.getElementById('expandedActivities');
+    activitiesList.innerHTML = dayData.activities
+        .map(activity => `<li>${activity}</li>`)
+        .join('');
+    
+    document.getElementById('dayExpanded').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Back to week plan
+function backToStory() {
+    document.getElementById('dayExpanded').style.display = 'none';
+    document.getElementById('weekScreen').style.display = 'block';
+    document.getElementById('weekScreen').scrollIntoView({ behavior: 'smooth' });
 }
 
 // Initialize on load
