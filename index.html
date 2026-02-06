@@ -12,7 +12,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', 'Poppins', cursive, sans-serif;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #ffe4ec 0%, #ffd1dc 50%, #ffb3c6 100%);
     color: #333;
     min-height: 100vh;
@@ -1916,6 +1916,11 @@ function updateCountdownTimer(targetDate) {
             `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
     
+    // Clear any existing timer to prevent multiple intervals running
+    if (window.currentTimerInterval) {
+        clearInterval(window.currentTimerInterval);
+    }
+
     formatCountdown();
     const timerInterval = setInterval(formatCountdown, 1000);
     
