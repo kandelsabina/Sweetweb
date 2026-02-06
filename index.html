@@ -2,33 +2,115 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Valentine’s Day 💕</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine's Week - A Love Story 💕</title>
 <style>
-body {
+* {
     margin: 0;
-    height: 100vh;
-    background: radial-gradient(circle, #ffe4ec, #ffd1dc);
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Comic Sans MS', 'Poppins', cursive, sans-serif;
+    background: linear-gradient(135deg, #ffe4ec 0%, #ffd1dc 50%, #ffb3c6 100%);
+    color: #333;
+    min-height: 100vh;
+}
+
+/* Navigation Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 77, 109, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 15px 20px;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav-btn {
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.nav-btn:hover, .nav-btn.active {
+    background: white;
+    color: #ff4d6d;
+    transform: translateY(-2px);
+}
+
+/* Pages */
+.page {
+    display: none;
+    padding-top: 80px;
+    min-height: 100vh;
+    animation: fadeIn 0.6s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Home Page */
+.home-page {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: 'Comic Sans MS', cursive;
-    overflow: hidden;
+    min-height: 100vh;
+    padding: 40px 20px;
 }
 
-/* Main Flower */
-.flower {
+.flower-main {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
+    margin: 30px 0;
     cursor: pointer;
     z-index: 2;
-    transition: transform 0.3s ease;
-}
-
-.flower:hover {
-    transform: scale(1.05);
 }
 
 .petal {
@@ -42,17 +124,17 @@ body {
     box-shadow: 0 0 15px rgba(255,105,135,0.4);
 }
 
-.petal:nth-child(1) { top: 0; left: 60px; }
-.petal:nth-child(2) { top: 60px; left: 0; }
-.petal:nth-child(3) { top: 60px; left: 120px; }
-.petal:nth-child(4) { top: 120px; left: 60px; }
+.petal:nth-child(1) { top: 0; left: 75px; }
+.petal:nth-child(2) { top: 75px; left: 0; }
+.petal:nth-child(3) { top: 75px; left: 150px; }
+.petal:nth-child(4) { top: 150px; left: 75px; }
 
 .center {
     position: absolute;
-    top: 70px;
-    left: 70px;
-    width: 60px;
-    height: 60px;
+    top: 85px;
+    left: 85px;
+    width: 80px;
+    height: 80px;
     background: #ff4d6d;
     border-radius: 50%;
     transform: scale(0);
@@ -65,160 +147,851 @@ body {
     50% { box-shadow: 0 0 25px rgba(255,77,109,0.9); }
 }
 
-.bloom .petal {
+.flower-main.bloom .petal {
     transform: scale(1) rotate(45deg);
 }
 
-.bloom .center {
+.flower-main.bloom .center {
     transform: scale(1);
 }
 
-/* Message */
-.message {
-    margin-top: 25px;
-    font-size: 34px;
-    color: #d6336c;
-    min-height: 40px;
-    z-index: 2;
-}
-
-/* Love Letter */
-.letter {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.7);
-    background: linear-gradient(135deg, #fff, #fff0f5);
-    width: 320px;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    opacity: 0;
-    transition: all 0.6s ease;
-    z-index: 5;
+.home-title {
+    font-size: 48px;
+    color: #ff4d6d;
     text-align: center;
+    margin: 20px 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
-.letter.show {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+.home-subtitle {
+    font-size: 20px;
+    color: #d6336c;
+    text-align: center;
+    margin-bottom: 40px;
 }
 
-.letter h2 {
+.start-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #ff6b9d, #ff4d6d);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(255,77,109,0.4);
+    text-transform: uppercase;
+}
+
+.start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(255,77,109,0.6);
+}
+
+/* Day Page */
+.day-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.day-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.day-emoji {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.day-title {
+    font-size: 48px;
     color: #ff4d6d;
     margin-bottom: 10px;
 }
 
-.letter p {
+.day-date {
     font-size: 16px;
-    color: #555;
-    line-height: 1.6;
+    color: #d6336c;
+    margin-bottom: 20px;
 }
 
-/* Floating hearts */
+.day-description {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.8);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(255,77,109,0.2);
+}
+
+.card-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 20px;
+    color: #ff4d6d;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.card-text {
+    color: #666;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* Interactive Section */
+.interactive-section {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.interactive-title {
+    font-size: 28px;
+    color: #ff4d6d;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Love Calculator */
+.calculator {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    color: #666;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ffb3c6;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #ff4d6d;
+}
+
+.calculate-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #ff6b9d, #ff4d6d);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calculate-btn:hover {
+    transform: scale(1.05);
+}
+
+.result {
+    text-align: center;
+    margin-top: 25px;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffe4ec, #ffd1dc);
+    border-radius: 10px;
+    display: none;
+}
+
+.result.show {
+    display: block;
+    animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.result-percentage {
+    font-size: 48px;
+    color: #ff4d6d;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.result-message {
+    color: #666;
+    font-size: 16px;
+}
+
+/* Countdown Timer */
+.countdown {
+    text-align: center;
+}
+
+.timer-display {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.timer-box {
+    background: linear-gradient(135deg, #ff6b9d, #ff4d6d);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.timer-label {
+    display: block;
+    font-size: 12px;
+    margin-top: 8px;
+    font-weight: normal;
+}
+
+/* Photo Gallery */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.gallery-item {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #ffb3c6, #ff8fab);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255,77,109,0.2);
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+/* Floating Elements */
 .heart {
-    position: absolute;
+    position: fixed;
     font-size: 20px;
     animation: float 6s linear infinite;
-    opacity: 0.8;
+    opacity: 0.7;
+    pointer-events: none;
 }
 
 @keyframes float {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-100vh); opacity: 0; }
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
 }
 
-/* Sparkles */
 .sparkle {
-    position: absolute;
-    font-size: 14px;
-    animation: sparkle 1s ease-out forwards;
+    position: fixed;
+    font-size: 16px;
+    animation: twinkle 1s ease-out forwards;
+    pointer-events: none;
 }
 
-@keyframes sparkle {
+@keyframes twinkle {
     0% { transform: scale(0); opacity: 1; }
     100% { transform: scale(1.5); opacity: 0; }
 }
 
-/* Background flowers */
-.bg-flower {
-    position: absolute;
-    font-size: 24px;
-    opacity: 0.25;
-    animation: drift 10s ease-in-out infinite;
+/* Footer Navigation */
+.footer-nav {
+    text-align: center;
+    padding: 30px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 40px;
 }
 
-@keyframes drift {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+.prev-btn, .next-btn {
+    padding: 10px 25px;
+    background: linear-gradient(135deg, #ff6b9d, #ff4d6d);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.prev-btn:hover, .next-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255,77,109,0.4);
+}
+
+.prev-btn:disabled, .next-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .home-title {
+        font-size: 32px;
+    }
+    
+    .day-title {
+        font-size: 32px;
+    }
+    
+    .nav-buttons {
+        gap: 5px;
+    }
+    
+    .nav-btn {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .day-emoji {
+        font-size: 60px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="flower" id="flower">
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="center"></div>
+<!-- Header Navigation -->
+<div class="header">
+    <div class="header-content">
+        <div class="logo" onclick="goToPage('home')">💕 Valentine's Week</div>
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="goToPage('home')">Home</button>
+            <button class="nav-btn" onclick="goToPage('roseday')">Rose</button>
+            <button class="nav-btn" onclick="goToPage('proposeday')">Propose</button>
+            <button class="nav-btn" onclick="goToPage('chocolateday')">Chocolate</button>
+            <button class="nav-btn" onclick="goToPage('teddyday')">Teddy</button>
+            <button class="nav-btn" onclick="goToPage('promiseday')">Promise</button>
+            <button class="nav-btn" onclick="goToPage('kissday')">Kiss</button>
+            <button class="nav-btn" onclick="goToPage('valentinesday')">Valentine</button>
+        </div>
+    </div>
 </div>
 
-<div class="message" id="text"></div>
-
-<div class="letter" id="letter">
-    <h2>💌 My Love</h2>
-    <p>
-        From the moment you entered my life, everything became softer, warmer, and brighter.
-        Your smile feels like home, your voice feels like comfort, and your presence feels like love.
-        <br><br>
-        On this Valentine’s Day, I just want you to know how deeply you are cherished.
-        Every little thing about you makes my world bloom.
-        <br><br>
-        Forever yours 💕
-    </p>
+<!-- Home Page -->
+<div class="page active" id="home">
+    <div class="home-page">
+        <div class="flower-main" id="mainFlower">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="center"></div>
+        </div>
+        <h1 class="home-title">Happy Valentine's Week! 💕</h1>
+        <p class="home-subtitle">Celebrate 7 days of love, joy, and romance</p>
+        <button class="start-btn" onclick="goToPage('roseday')">Begin The Journey →</button>
+    </div>
 </div>
+
+<!-- Rose Day Page -->
+<div class="page" id="roseday">
+    <div class="day-page">
+        <div class="day-header">
+            <div class="day-emoji">🌹</div>
+            <h1 class="day-title">Rose Day</h1>
+            <p class="day-date">February 7</p>
+            <p class="day-description">The festival of love begins with roses. A single red rose symbolizes deep love, admiration, and a promise of devotion. On this day, we celebrate the beauty of expressing our deepest feelings with a timeless flower.</p>
+        </div>
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-icon">🌸</div>
+                <div class="card-title">Rose Meanings</div>
+                <div class="card-text">Red roses symbolize deep love and passion, white roses represent purity, and pink roses express admiration and gratitude.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💐</div>
+                <div class="card-title">Perfect Gift</div>
+                <div class="card-text">A dozen red roses is the ultimate classic gesture. Each rose represents a month of love and commitment.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💌</div>
+                <div class="card-title">Express Love</div>
+                <div class="card-text">Pair your roses with a heartfelt message. Let your words bloom as beautifully as the flowers.</div>
+            </div>
+        </div>
+        <div class="interactive-section">
+            <h2 class="interactive-title">🌹 Create Your Love Message</h2>
+            <div class="gallery">
+                <div class="gallery-item" onclick="createSparkles()">🌹</div>
+                <div class="gallery-item" onclick="createSparkles()">🌷</div>
+                <div class="gallery-item" onclick="createSparkles()">🌺</div>
+                <div class="gallery-item" onclick="createSparkles()">🌸</div>
+                <div class="gallery-item" onclick="createSparkles()">💐</div>
+                <div class="gallery-item" onclick="createSparkles()">💕</div>
+            </div>
+        </div>
+        <div class="footer-nav">
+            <button class="next-btn" onclick="goToPage('proposeday')">Next →</button>
+        </div>
+    </div>
+</div>
+
+<!-- Propose Day Page -->
+<div class="page" id="proposeday">
+    <div class="day-page">
+        <div class="day-header">
+            <div class="day-emoji">💍</div>
+            <h1 class="day-title">Propose Day</h1>
+            <p class="day-date">February 8</p>
+            <p class="day-description">The day to take a leap of faith and ask that special someone to be yours forever. Whether it's your first proposal or a renewal of vows, this day celebrates commitment and eternal love.</p>
+        </div>
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-icon">💎</div>
+                <div class="card-title">The Perfect Moment</div>
+                <div class="card-text">Choose a moment that's meaningful to both of you. It doesn't have to be grand—sincerity is what matters.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💍</div>
+                <div class="card-title">Speak Your Truth</div>
+                <div class="card-text">Tell them exactly why they mean the world to you. Share your dreams and vision of a future together.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">❤️</div>
+                <div class="card-title">Forever Promise</div>
+                <div class="card-text">A proposal is a promise to stand by each other through every season of life.</div>
+            </div>
+        </div>
+        <div class="interactive-section">
+            <h2 class="interactive-title">💕 Love Calculator</h2>
+            <div class="calculator">
+                <div class="input-group">
+                    <label>Your Name:</label>
+                    <input type="text" id="yourName" placeholder="Enter your name">
+                </div>
+                <div class="input-group">
+                    <label>Their Name:</label>
+                    <input type="text" id="theirName" placeholder="Enter their name">
+                </div>
+                <button class="calculate-btn" onclick="calculateLove()">Calculate Love %</button>
+                <div class="result" id="loveResult">
+                    <div class="result-percentage" id="percentage">0%</div>
+                    <div class="result-message" id="message">Your love is eternal! 💕</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-nav">
+            <button class="prev-btn" onclick="goToPage('roseday')">← Previous</button>
+            <button class="next-btn" onclick="goToPage('chocolateday')">Next →</button>
+        </div>
+    </div>
+</div>
+
+<!-- Chocolate Day Page -->
+<div class="page" id="chocolateday">
+    <div class="day-page">
+        <div class="day-header">
+            <div class="day-emoji">🍫</div>
+            <h1 class="day-title">Chocolate Day</h1>
+            <p class="day-date">February 9</p>
+            <p class="day-description">Sweeten your love with delicious chocolate. Just like chocolate melts in your mouth, love melts in your heart. This day celebrates the sweet moments and delightful memories you share.</p>
+        </div>
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-icon">🍫</div>
+                <div class="card-title">Dark Chocolate</div>
+                <div class="card-text">Rich, intense, and full of passion. Dark chocolate represents the deeper, more complex aspects of love.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🍦</div>
+                <div class="card-title">Sweet Moments</div>
+                <div class="card-text">Every moment with your loved one is like savoring premium chocolate—precious and fleeting.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💝</div>
+                <div class="card-title">Gift of Joy</div>
+                <div class="card-text">Chocolate is more than a treat; it's a symbol of care, affection, and bringing joy to someone special.</div>
+            </div>
+        </div>
+        <div class="interactive-section">
+            <h2 class="interactive-title">🍫 Chocolate Flavor Game</h2>
+            <div style="text-align: center; padding: 30px;">
+                <p style="color: #666; font-size: 16px; margin-bottom: 20px;">Click your favorite chocolate flavors:</p>
+                <div class="gallery">
+                    <div class="gallery-item" onclick="selectFlavor(this)">🍫</div>
+                    <div class="gallery-item" onclick="selectFlavor(this)">🍓</div>
+                    <div class="gallery-item" onclick="selectFlavor(this)">🍊</div>
+                    <div class="gallery-item" onclick="selectFlavor(this)">🌰</div>
+                    <div class="gallery-item" onclick="selectFlavor(this)">🍒</div>
+                    <div class="gallery-item" onclick="selectFlavor(this)">✨</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-nav">
+            <button class="prev-btn" onclick="goToPage('proposeday')">← Previous</button>
+            <button class="next-btn" onclick="goToPage('teddyday')">Next →</button>
+        </div>
+    </div>
+</div>
+
+<!-- Teddy Day Page -->
+<div class="page" id="teddyday">
+    <div class="day-page">
+        <div class="day-header">
+            <div class="day-emoji">🧸</div>
+            <h1 class="day-title">Teddy Day</h1>
+            <p class="day-date">February 10</p>
+            <p class="day-description">Celebrate comfort, cuddles, and care. A teddy bear represents unconditional love, warmth, and the safety of being in someone's arms. On this day, we cherish the comfort our loved ones bring.</p>
+        </div>
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-icon">🧸</div>
+                <div class="card-title">Cuddly Comfort</div>
+                <div class="card-text">A teddy bear is a symbol of softness and warmth—just like the feeling of being held by someone you love.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤗</div>
+                <div class="card-title">Warm Hugs</div>
+                <div class="card-text">The best gift on Teddy Day is a warm hug and the assurance that you'll always be there for them.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💤</div>
+                <div class="card-title">Sweet Dreams</div>
+                <div class="card-text">A teddy bear brings peace and comfort, making sure every night ends with sweet dreams of your love.</div>
+            </div>
+        </div>
+        <div class="interactive-section">
+            <h2 class="interactive-title">🧸 Memory Moments</h2>
+            <div style="padding: 30px; text-align: center;">
+                <p style="color: #666; font-size: 16px; margin-bottom: 20px;">Click each moment to reveal your memories:</p>
+                <div class="gallery">
+                    <div class="gallery-item" onclick="revealMemory(this)">📸</div>
+                    <div class="gallery-item" onclick="revealMemory(this)">🎂</div>
+                    <div class="gallery-item" onclick="revealMemory(this)">🎭</div>
+                    <div class="gallery-item" onclick="revealMemory(this)">🌙</div>
+                    <div class="gallery-item" onclick="revealMemory(this)">🎵</div>
+                    <div class="gallery-item" onclick="revealMemory(this)">✈️</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-nav">
+            <button class="prev-btn" onclick="goToPage('chocolateday')">← Previous</button>
+            <button class="next-btn" onclick="goToPage('promiseday')">Next →</button>
+        </div>
+    </div>
+</div>
+
+<!-- Promise Day Page -->
+<div class="page" id="promiseday">
+    <div class="day-page">
+        <div class="day-header">
+            <div class="day-emoji">🤝</div>
+            <h1 class="day-title">Promise Day</h1>
+            <p class="day-date">February 11</p>
+            <p class="day-description">The day to make solemn promises and commitments. Love is built on promises—to be there, to care, to support, and to cherish. On this day, renew your vows and declare your eternal devotion.</p>
+        </div>
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-icon">🤝</div>
+                <div class="card-title">Stand Together</div>
+                <div class="card-text">Promise to face every challenge side by side. Together, you can conquer any storm that comes your way.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🌟</div>
+                <div class="card-title">Eternal Support</div>
+                <div class="card-text">Promise to be their biggest cheerleader in success and their strongest support in times of struggle.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💕</div>
+                <div class="card-title">Forever Love</div>
+                <div class="card-text">Promise to love them not just in good times, but through every season, every change, every moment.</div>
+            </div>
+        </div>
+        <div class="interactive-section">
+            <h2 class="interactive-title">🤝 Make Your Promises</h2>
+            <div style="max-width: 600px; margin: 0 auto; padding: 25px; background: rgba(255,255,255,0.8); border-radius: 10px;">
+                <div style="margin-bottom: 20px;">
+                    <textarea id="promiseText" placeholder="Write your promises here..." style="width: 100%; height: 150px; padding: 12px; border: 2px solid #ffb3c6; border-radius: 8px; font-family: inherit; font-size: 14px; resize: none;"></textarea>
+                </div>
+                <button class="calculate-btn" onclick="savePromise()">Save Promise 💕</button>
+                <div id="promiseSaved" style="margin-top: 15px; color: #ff4d6d; font-weight: bold; display: none;">✓ Your promise has been saved in your heart!</div>
+            </div>
+        </div>
+        <div class="footer-nav">
+            <button class="prev-btn" onclick="goToPage('teddyday')">← Previous</button>
+            <button class="next-btn" onclick="goToPage('kissday')">Next →</button>
+        </div>
+    </div>
+</div>
+
+<!-- Kiss Day Page -->
+<div class="page" id="kissday">
+    <div class="day-page">
+        <div class="day-header">
+            <div class="day-emoji">😘</div>
+            <h1 class="day-title">Kiss Day</h1>
+            <p class="day-date">February 12</p>
+            <p class="day-description">A kiss is the most intimate gesture of love. It speaks what words cannot express, heals what tears cannot wash away, and fills hearts with the deepest affection. On this day, celebrate the magic of that perfect moment.</p>
+        </div>
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-icon">😘</div>
+                <div class="card-title">Silent Language</div>
+                <div class="card-text">A kiss says a thousand things without uttering a single word. It's the language of the heart.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💏</div>
+                <div class="card-title">Pure Connection</div>
+                <div class="card-text">In that moment, two souls become one. A kiss is the ultimate expression of devotion and desire.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">✨</div>
+                <div class="card-title">Magical Moment</div>
+                <div class="card-text">Every kiss is a memory, a promise, and a celebration of the love you share.</div>
+            </div>
+        </div>
+        <div class="interactive-section">
+            <h2 class="interactive-title">😘 Countdown to Valentine's Day</h2>
+            <div class="countdown">
+                <p style="color: #666; margin-bottom: 25px;">Days, Hours, Minutes, Seconds until Valentine's Day:</p>
+                <div class="timer-display">
+                    <div class="timer-box">
+                        <span id="days">0</span>
+                        <span class="timer-label">Days</span>
+                    </div>
+                    <div class="timer-box">
+                        <span id="hours">0</span>
+                        <span class="timer-label">Hours</span>
+                    </div>
+                    <div class="timer-box">
+                        <span id="minutes">0</span>
+                        <span class="timer-label">Minutes</span>
+                    </div>
+                    <div class="timer-box">
+                        <span id="seconds">0</span>
+                        <span class="timer-label">Seconds</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-nav">
+            <button class="prev-btn" onclick="goToPage('promiseday')">← Previous</button>
+            <button class="next-btn" onclick="goToPage('valentinesday')">Next →</button>
+        </div>
+    </div>
+</div>
+
+<!-- Valentine's Day Page -->
+<div class="page" id="valentinesday">
+    <div class="day-page">
+        <div class="day-header">
+            <div class="day-emoji">💕</div>
+            <h1 class="day-title">Valentine's Day</h1>
+            <p class="day-date">February 14</p>
+            <p class="day-description">The culmination of a week-long celebration of love. This is the day to express your deepest feelings, celebrate your bond, and cherish every moment with the one who makes your heart skip a beat. Happy Valentine's Day to your forever love!</p>
+        </div>
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-icon">💝</div>
+                <div class="card-title">Ultimate Gift</div>
+                <div class="card-text">The greatest gift on Valentine's Day is your presence, your love, and your unwavering commitment.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🌹</div>
+                <div class="card-title">Seven Days Journey</div>
+                <div class="card-text">From roses to this day, every moment has been a step deeper into love. Celebrate the journey.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon">∞</div>
+                <div class="card-title">Forever & Always</div>
+                <div class="card-text">Love knows no end. Today marks the beginning of forever together with your soulmate.</div>
+            </div>
+        </div>
+        <div class="interactive-section">
+            <h2 class="interactive-title">💕 Your Love Story Gallery</h2>
+            <div class="gallery">
+                <div class="gallery-item">🌹</div>
+                <div class="gallery-item">💍</div>
+                <div class="gallery-item">🍫</div>
+                <div class="gallery-item">🧸</div>
+                <div class="gallery-item">🤝</div>
+                <div class="gallery-item">😘</div>
+            </div>
+            <div style="text-align: center; margin-top: 30px; padding: 25px; background: rgba(255,255,255,0.8); border-radius: 10px;">
+                <p style="font-size: 20px; color: #ff4d6d; margin-bottom: 15px;">✨ A Message for You ✨</p>
+                <p style="color: #666; line-height: 1.8; font-size: 16px;">From the moment you entered my life, everything became more beautiful, more meaningful, more real. You are my greatest blessing, my sweetest dream, and my most treasured gift. Thank you for being my Valentine, not just today, but every single day. I love you beyond words, beyond measure, beyond forever. 💕</p>
+            </div>
+        </div>
+        <div class="footer-nav">
+            <button class="prev-btn" onclick="goToPage('kissday')">← Previous</button>
+            <button class="start-btn" onclick="goToPage('home')" style="padding: 10px 25px;">Back to Home</button>
+        </div>
+    </div>
+</div>
+
 
 <script>
-/* Typing text */
-const text = "Happy Valentine’s Day 💕";
-let index = 0;
-const textElement = document.getElementById("text");
-
-function typeText() {
-    if (index < text.length) {
-        textElement.innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeText, 100);
-    }
-}
-typeText();
-
-/* Flower click */
-const flower = document.getElementById("flower");
-const letter = document.getElementById("letter");
-
-flower.addEventListener("click", (e) => {
-    flower.classList.toggle("bloom");
-    letter.classList.add("show");
-    sparkle(e.clientX, e.clientY);
-});
-
-/* Sparkle effect */
-function sparkle(x, y) {
-    for (let i = 0; i < 6; i++) {
-        const s = document.createElement("div");
-        s.className = "sparkle";
-        s.innerHTML = "✨";
-        s.style.left = x + Math.random()*40 - 20 + "px";
-        s.style.top = y + Math.random()*40 - 20 + "px";
-        document.body.appendChild(s);
-        setTimeout(() => s.remove(), 1000);
-    }
+// Page Navigation
+function goToPage(pageId) {
+    // Hide all pages
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => page.classList.remove('active'));
+    
+    // Show selected page
+    document.getElementById(pageId).classList.add('active');
+    
+    // Update active button in navigation
+    const buttons = document.querySelectorAll('.nav-btn');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-page') === pageId) {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
 }
 
-/* Floating hearts */
+// Love Calculator
+function calculateLove() {
+    const name1 = document.getElementById('yourName').value.trim();
+    const name2 = document.getElementById('theirName').value.trim();
+    
+    if (!name1 || !name2) {
+        alert('Please enter both names!');
+        return;
+    }
+    
+    // Simple hash algorithm to generate percentage
+    const combined = (name1 + name2).toLowerCase();
+    let hash = 0;
+    for (let i = 0; i < combined.length; i++) {
+        hash = ((hash << 5) - hash) + combined.charCodeAt(i);
+        hash = hash & hash;
+    }
+    const percentage = Math.abs(hash % 101);
+    
+    document.getElementById('percentage').textContent = percentage + '%';
+    
+    let message = '';
+    if (percentage >= 90) message = 'Perfect Match!  Made for each other!';
+    else if (percentage >= 75) message = 'Great Connection!  Very compatible!';
+    else if (percentage >= 50) message = 'Good Potential!  Give it a chance!';
+    else message = 'Opposites Attract!  Unique bond!';
+    
+    document.getElementById('message').textContent = message;
+}
+
+// Chocolate Flavor Selector
+function selectFlavor(element) {
+    element.style.animation = 'none';
+    setTimeout(() => {
+        element.style.animation = 'bounce 0.6s ease';
+    }, 10);
+}
+
+// Memory Moment Reveal
+function revealMemory(element) {
+    element.style.opacity = '1';
+}
+
+// Countdown Timer
+function updateCountdown() {
+    const valentineDate = new Date('2025-02-14T00:00:00').getTime();
+    const now = new Date().getTime();
+    const distance = valentineDate - now;
+    
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    const countdownEl = document.getElementById('countdown');
+    if (countdownEl) {
+        countdownEl.innerHTML = `
+            <div class="countdown-item"><span class="countdown-value">${days}</span><span class="countdown-label">Days</span></div>
+            <div class="countdown-item"><span class="countdown-value">${hours}</span><span class="countdown-label">Hours</span></div>
+            <div class="countdown-item"><span class="countdown-value">${minutes}</span><span class="countdown-label">Minutes</span></div>
+            <div class="countdown-item"><span class="countdown-value">${seconds}</span><span class="countdown-label">Seconds</span></div>
+        `;
+    }
+}
+
+// Promise Saver
+function savePromise() {
+    const promiseText = document.getElementById('promiseInput').value;
+    if (promiseText.trim()) {
+        localStorage.setItem('myPromise', promiseText);
+        alert('Your promise has been saved! 💝');
+        document.getElementById('promiseInput').value = '';
+        displayPromises();
+    }
+}
+
+function displayPromises() {
+    const promise = localStorage.getItem('myPromise');
+    const promiseDisplay = document.getElementById('promiseDisplay');
+    if (promiseDisplay && promise) {
+        promiseDisplay.innerHTML = `<div class="saved-promise">💝 "${promise}"</div>`;
+    }
+}
+
+// Floating Hearts
 function createHeart() {
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -229,19 +1002,48 @@ function createHeart() {
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 6000);
 }
-setInterval(createHeart, 500);
 
-/* Background flowers */
-const flowers = ["🌸","🌷","🌼","💐"];
-for (let i = 0; i < 30; i++) {
-    const f = document.createElement("div");
-    f.className = "bg-flower";
-    f.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-    f.style.left = Math.random() * 100 + "vw";
-    f.style.top = Math.random() * 100 + "vh";
-    f.style.animationDuration = (6 + Math.random() * 6) + "s";
-    document.body.appendChild(f);
+// Sparkle Effects
+function createSparkles() {
+    for (let i = 0; i < 12; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        sparkle.innerHTML = "✨";
+        sparkle.style.left = Math.random() * 100 + "vw";
+        sparkle.style.top = Math.random() * 100 + "vh";
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+    }
 }
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    // Set home page as active by default
+    goToPage('home');
+    
+    // Create floating hearts every 1.5 seconds
+    setInterval(createHeart, 1500);
+    
+    // Update countdown every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    
+    // Display saved promise on load
+    displayPromises();
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        const pages = ['home', 'roseday', 'proposeday', 'chocolateday', 'teddyday', 'promiseday', 'kissday', 'valentineday'];
+        const currentPage = document.querySelector('.page.active');
+        const currentIndex = pages.indexOf(currentPage.id);
+        
+        if (e.key === 'ArrowLeft' && currentIndex > 0) {
+            goToPage(pages[currentIndex - 1]);
+        } else if (e.key === 'ArrowRight' && currentIndex < pages.length - 1) {
+            goToPage(pages[currentIndex + 1]);
+        }
+    });
+});
 </script>
 
 </body>
