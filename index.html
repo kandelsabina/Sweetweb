@@ -660,6 +660,151 @@ body {
     margin-bottom: 15px;
 }
 
+/* Countdown Timer */
+.countdown-section {
+    background: linear-gradient(135deg, #ff6b9d, #ff4d6d);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px 0;
+    color: white;
+    text-align: center;
+}
+
+.countdown-label {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.countdown-display {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+/* Sweet Message */
+.sweet-message {
+    background: linear-gradient(135deg, #fff5f7, #ffe4ec);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px 0;
+    border-left: 5px solid #ff4d6d;
+}
+
+.sweet-message-title {
+    font-size: 20px;
+    color: #ff4d6d;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.sweet-message-text {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.8;
+    font-style: italic;
+}
+
+/* Music Player */
+.music-section {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.music-title {
+    font-size: 22px;
+    color: #ff4d6d;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.music-player {
+    width: 100%;
+    background: linear-gradient(135deg, #fff5f7, #ffe4ec);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.music-player audio {
+    width: 100%;
+    cursor: pointer;
+}
+
+.music-playlist {
+    display: grid;
+    gap: 15px;
+}
+
+.music-item {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-left: 4px solid #ffb3c6;
+}
+
+.music-item:hover {
+    background: #f0f0f0;
+    border-left-color: #ff4d6d;
+    transform: translateX(5px);
+}
+
+.music-play-btn {
+    font-size: 24px;
+    min-width: 30px;
+}
+
+.music-info {
+    flex: 1;
+}
+
+.music-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.music-artist {
+    font-size: 14px;
+    color: #999;
+}
+
+/* Day Countdown Grid */
+.day-countdown {
+    background: rgba(255, 77, 109, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(255, 77, 109, 0.2);
+}
+
+.day-countdown-name {
+    font-weight: bold;
+    color: #ff4d6d;
+}
+
+.day-countdown-time {
+    font-size: 14px;
+    color: #666;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .proposal-card, .name-card, .rejection-card {
@@ -827,6 +972,26 @@ body {
         <div class="expanded-content">
             <div class="expanded-story" id="expandedStory">
                 Loading...
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="countdown-section">
+                <span class="countdown-label">⏰ Time Until This Day</span>
+                <div class="countdown-display" id="countdownDisplay">Calculating...</div>
+            </div>
+
+            <!-- Sweet Message -->
+            <div class="sweet-message">
+                <div class="sweet-message-title">💌 A Sweet Message For You Both</div>
+                <div class="sweet-message-text" id="sweetMessage">Loading...</div>
+            </div>
+
+            <!-- Music Player -->
+            <div class="music-section">
+                <div class="music-title">🎵 Romantic Music For This Moment</div>
+                <div class="music-playlist" id="musicPlaylist">
+                    Loading music...
+                </div>
             </div>
 
             <div class="expanded-activities">
@@ -1043,6 +1208,12 @@ const valentineWeek = [
         emoji: "🌹",
         date: "February 7",
         story: "Rose Day marks the beginning of Valentine's Week, a celebration of love's first whispers. It's a day to express admiration and affection through the timeless symbol of a rose. Just as a rose blooms with delicate beauty, your love story is beginning to unfold in the most magical way. The crimson petals represent not just passion, but the care, attention, and devotion that comes with true love.",
+        sweetMessage: (yourName, theirName) => `${yourName}, today as you give ${theirName} a rose, remember that they are the most beautiful bloom in your garden. Every petal represents a reason you love them. ${theirName}, this rose is not just a flower—it's a promise of admiration that will never wilt. 🌹💕`,
+        music: [
+            { name: "Perfect", artist: "Ed Sheeran", type: "search" },
+            { name: "All of Me", artist: "John Legend", type: "search" },
+            { name: "Thinking Out Loud", artist: "Ed Sheeran", type: "search" }
+        ],
         activities: [
             "💌 Give each other a beautiful rose or flowers",
             "🌹 Share what you love most about each other",
@@ -1058,6 +1229,12 @@ const valentineWeek = [
         emoji: "💍",
         date: "February 8",
         story: "Propose Day is about taking that leap of faith and asking the most important question. Whether it's a marriage proposal or a promise of forever, this day celebrates commitment and the courage to ask someone to be your forever. It's about vulnerability, honesty, and saying the words that matter most. On this day, two hearts unite with a promise that transcends time itself.",
+        sweetMessage: (yourName, theirName) => `${yourName}, today you ask the biggest question of your life. ${theirName}, prepare your heart for the most important 'yes' you'll ever say. This moment marks the beginning of forever—a future written in both your dreams. 💍✨`,
+        music: [
+            { name: "Marry Me", artist: "Jason Derulo", type: "search" },
+            { name: "Forever and Always", artist: "Parachute", type: "search" },
+            { name: "From This Moment On", artist: "Shania Twain", type: "search" }
+        ],
         activities: [
             "💍 Plan a special surprise proposal or renewal of vows",
             "🎁 Exchange meaningful gifts or rings",
@@ -1074,6 +1251,12 @@ const valentineWeek = [
         emoji: "🍫",
         date: "February 9",
         story: "Chocolate Day celebrates the sweetness of love. Just as chocolate melts on your tongue and brings joy, love sweetens every moment of life. It's a day to indulge in the small pleasures together, to enjoy the richness of companionship, and to savor every second spent with your beloved. Chocolate represents not just sweetness, but comfort, warmth, and the luxurious feeling of being loved.",
+        sweetMessage: (yourName, theirName) => `${yourName} and ${theirName}, like chocolate, your love is rich, luxurious, and brings warmth to every moment. Today, as you share something sweet, remember that the sweetest thing in your life is each other. Every moment together tastes like happiness. 🍫💕`,
+        music: [
+            { name: "Chocolate", artist: "Snow Patrol", type: "search" },
+            { name: "Sugar", artist: "Maroon 5", type: "search" },
+            { name: "Sweetest Thing", artist: "U2", type: "search" }
+        ],
         activities: [
             "🍫 Share a box of chocolates together",
             "👨‍🍳 Make homemade chocolate desserts together",
@@ -1090,6 +1273,12 @@ const valentineWeek = [
         emoji: "🧸",
         date: "February 10",
         story: "Teddy Day celebrates the comfort and warmth that comes with unconditional love. A teddy bear symbolizes comfort, protection, and the innocent purity of affection. It's a day to embrace each other, to find solace in each other's arms, and to remind your partner that you'll always be there to comfort them. Like a teddy bear, love provides warmth through the coldest nights.",
+        sweetMessage: (yourName, theirName) => `${yourName}, hold ${theirName} close today like a precious teddy bear you never want to let go. ${theirName}, be the comfort that ${yourName} always comes back to. In each other's arms is where you both belong—safe, warm, and infinitely loved. 🧸💕`,
+        music: [
+            { name: "Warm Embrace", artist: "Matt Nathanson", type: "search" },
+            { name: "Your Body Is a Wonderland", artist: "John Mayer", type: "search" },
+            { name: "Better Together", artist: "Jack Johnson", type: "search" }
+        ],
         activities: [
             "🧸 Give each other matching teddy bears or plushies",
             "🤗 Have a cozy cuddle session with blankets and pillows",
@@ -1106,6 +1295,12 @@ const valentineWeek = [
         emoji: "🤝",
         date: "February 11",
         story: "Promise Day is about making vows and commitments that will last a lifetime. It's not just about grand gestures, but small promises to be there through thick and thin. To listen when they need to talk, to hold them when they cry, and to celebrate their victories as if they were your own. Every promise made on this day becomes the foundation of a lasting relationship.",
+        sweetMessage: (yourName, theirName) => `${yourName}, today you promise your forever to ${theirName}. Not the perfect forever, but the real one—with honest words, open hearts, and unwavering commitment. ${theirName}, these promises are sacred. They are the foundation of everything beautiful you'll build together. 🤝💕`,
+        music: [
+            { name: "I Will Follow You Into The Dark", artist: "Death Cab for Cutie", type: "search" },
+            { name: "In My Veins", artist: "Andrew Belle", type: "search" },
+            { name: "The Promise", artist: "Sam Tsui", type: "search" }
+        ],
         activities: [
             "🤝 Exchange written promises to each other",
             "💕 Make promises you'll keep forever",
@@ -1122,6 +1317,12 @@ const valentineWeek = [
         emoji: "😘",
         date: "February 12",
         story: "Kiss Day celebrates the magic of affection and connection. A kiss is more than just a physical act—it's a language of love that words cannot express. It's the moment when two souls touch, when vulnerability meets trust, and when passion speaks louder than words. Every kiss is a promise, a question, an answer, and a celebration all at once.",
+        sweetMessage: (yourName, theirName) => `${yourName}, every kiss with ${theirName} is a conversation your hearts have with each other. ${theirName}, ${yourName}'s lips taste like home, like forever, like everything you've been waiting for. Today, let every kiss remind you that you are loved beyond words. 😘💕`,
+        music: [
+            { name: "Kiss Me", artist: "Sixpence None the Richer", type: "search" },
+            { name: "The Way", artist: "Fastball", type: "search" },
+            { name: "Kissing You", artist: "Des'ree", type: "search" }
+        ],
         activities: [
             "😘 Share multiple romantic kisses throughout the day",
             "💋 Learn about different kiss styles and meanings",
@@ -1138,6 +1339,12 @@ const valentineWeek = [
         emoji: "💕",
         date: "February 14",
         story: "Valentine's Day is the culmination of a week of love celebration. It's the day when the entire world joins in celebrating romance and affection. But for you, it's more than just a day—it's a milestone in your love story. It's a moment to reflect on how far you've come, to appreciate every moment shared, and to look forward to a lifetime of beautiful tomorrows together. This is the day you celebrate not just love, but YOUR love.",
+        sweetMessage: (yourName, theirName) => `${yourName} and ${theirName}, today the world celebrates love, but you have each other every day. This is not just Valentine's Day—this is the day you celebrate the greatest love story ever written, the one only you two can tell. Happy Valentine's Day to the love of each other's lives. 💕💕`,
+        music: [
+            { name: "Love Me Like You Do", artist: "Ellie Goulding", type: "search" },
+            { name: "Make You Feel My Love", artist: "Adele", type: "search" },
+            { name: "At Last", artist: "Etta James", type: "search" }
+        ],
         activities: [
             "💕 Exchange thoughtful Valentine's Day gifts",
             "🍽️ Have a romantic dinner reservation",
@@ -1207,12 +1414,73 @@ function showDayDetails(dayData, yourName, theirName) {
     document.getElementById('expandedDate').textContent = dayData.date;
     document.getElementById('expandedStory').textContent = personalizedStory;
     
+    // Display sweet message
+    const sweetMessage = dayData.sweetMessage(yourName, theirName);
+    document.getElementById('sweetMessage').textContent = sweetMessage;
+    
+    // Display countdown timer
+    updateCountdownTimer(dayData.date);
+    
+    // Display music playlist
+    displayMusicPlaylist(dayData.music);
+    
     const activitiesList = document.getElementById('expandedActivities');
     activitiesList.innerHTML = dayData.activities
         .map(activity => `<li>${activity}</li>`)
         .join('');
     
     document.getElementById('dayExpanded').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Update countdown timer for each day
+function updateCountdownTimer(targetDate) {
+    const today = new Date();
+    const target = new Date('2026-' + targetDate.split(' ')[1] + '-' + targetDate.split(' ')[2]);
+    
+    function formatCountdown() {
+        const now = new Date();
+        const timeLeft = target - now;
+        
+        if (timeLeft < 0) {
+            document.getElementById('countdownDisplay').textContent = "This day is here! 🎉";
+            return;
+        }
+        
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        
+        document.getElementById('countdownDisplay').textContent = 
+            `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+    
+    formatCountdown();
+    setInterval(formatCountdown, 1000);
+}
+
+// Display music playlist
+function displayMusicPlaylist(musicList) {
+    const playlistContainer = document.getElementById('musicPlaylist');
+    playlistContainer.innerHTML = '';
+    
+    musicList.forEach((song) => {
+        const musicItem = document.createElement('div');
+        musicItem.className = 'music-item';
+        
+        // Create YouTube search link
+        const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(song.name + ' ' + song.artist)}`;
+        
+        musicItem.innerHTML = `
+            <div class="music-play-btn" onclick="window.open('${youtubeSearchUrl}', '_blank')">▶️</div>
+            <div class="music-info">
+                <div class="music-name">${song.name}</div>
+                <div class="music-artist">${song.artist}</div>
+            </div>
+        `;
+        
+        playlistContainer.appendChild(musicItem);
+    });
 }
 
 // Back to week plan
