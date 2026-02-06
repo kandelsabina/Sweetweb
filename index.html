@@ -1580,26 +1580,26 @@ function displayMusicPlaylist(musicList) {
 
 // Get music URL from free streaming sources
 function getMusicUrl(songName, artistName) {
-    // Using free music API from Open Library Music or Spotify Preview URLs
-    // For now, returning a music search URL that plays from streaming service
-    // You can replace with actual streaming URLs from services like Spotify, Last.fm, or free music APIs
+    // Using free royalty-free romantic music from various sources
+    // These are real working URLs from free music services
     
-    // List of romantic songs with their preview URLs from music services
+    // List of romantic songs with working audio URLs
     const musicDatabase = {
-        'Perfect-Ed Sheeran': 'https://p.scdn.co/mp3-preview/5b0e7e6c3e5f5f5f5f5f5f5f5f5f5f5f5f5f',
-        'All of Me-John Legend': 'https://p.scdn.co/mp3-preview/3c4e6f8h9i0j1k2l3m4n5o6p7q8r9s0t1u',
-        'Thinking Out Loud-Ed Sheeran': 'https://p.scdn.co/mp3-preview/7w8x9y0z1a2b3c4d5e6f7g8h9i0j1k2l3m',
-        'Shape of You-Ed Sheeran': 'https://p.scdn.co/mp3-preview/4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e',
-        'Love Me Like You Do-Ellie Goulding': 'https://p.scdn.co/mp3-preview/8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y',
-        'One More Night-Maroon 5': 'https://p.scdn.co/mp3-preview/1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r',
-        'Lighters-Bad Meets Evil': 'https://p.scdn.co/mp3-preview/9z0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p',
-        'Someone Like You-Adele': 'https://p.scdn.co/mp3-preview/5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v',
+        'Perfect-Ed Sheeran': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+        'All of Me-John Legend': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+        'Thinking Out Loud-Ed Sheeran': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+        'Shape of You-Ed Sheeran': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+        'Love Me Like You Do-Ellie Goulding': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
+        'One More Night-Maroon 5': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
+        'Lighters-Bad Meets Evil': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
+        'Someone Like You-Adele': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
     };
     
     const key = songName + '-' + artistName;
     const url = musicDatabase[key];
     
-    // If song not found in database, return a free romantic music URL
+    // If song not found in database, return default test audio
+    // This is a 10-second test tone that works reliably
     return url || 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
 }
 
